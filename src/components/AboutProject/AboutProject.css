@@ -1,0 +1,72 @@
+.about {
+    padding: 110px 70px 0;
+    background-color: #000000;
+    min-height: 608px;
+    box-sizing: border-box;
+}
+
+.about__title {
+    margin: 0;
+    padding: 0;
+    width: 600px;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.21;
+    letter-spacing: -0.04em;
+}
+
+.about__title-line {
+    border-bottom: solid 1px #DADADA;
+    box-sizing: border-box;
+    height: 1px;
+    margin: 22px auto 0;
+}
+
+.about__info {
+    padding: 70px 0 110px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 26px 40px;
+}
+
+.about__info-title {
+    margin: 0;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+}
+
+.about__info-text {
+    margin: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.43;
+}
+
+.about__times {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 36px 1fr;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.21;
+    text-align: center;
+}
+
+.about__times-backend {
+    background-color: #3DDC84;
+    color: #000000;
+    padding: 9px 0;
+}
+
+.about__times-frontend {
+    background-color: #303030;
+    color: #ffffff;
+    padding: 9px 0;
+}
+
+.about__times-description {
+    color: #8B8B8B;
+    margin-bottom: 0;
+}
