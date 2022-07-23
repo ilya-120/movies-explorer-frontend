@@ -1,0 +1,28 @@
+.promo {
+    position: relative;
+    background-color: #073042;
+    min-height: 560px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.promo__container {
+    padding: 50px 70px 0;
+}
+
+.promo__title {
+    margin: 0;
+    padding: 0;
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 52px;
+    letter-spacing: -0.04em;
+    max-width: 620px;
+}
+
+.promo__logo {
+    position: absolute;
+    bottom: 60px;
+    right: 70px;
+}

@@ -1,0 +1,45 @@
+.navigation {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header__link {
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 1.33;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #ffffff;
+  }
+  
+  .header__link:hover {
+    opacity: 0.8;
+  }
+
+  .header__button {
+    border: none;
+    box-sizing: border-box;
+    width: 76px;
+    height: 32px;
+    border-radius: 3px;
+    background-color: #3DDC84;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin-left: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  .header__button:hover {
+    opacity: 0.8;
+  }
+  
+  .header__button-text {
+    color: #000000;
+    font-size: 12px;
+    line-height: 1.33;
+    font-weight: 500;
+  }
