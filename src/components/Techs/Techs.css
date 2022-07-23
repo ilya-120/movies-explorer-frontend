@@ -2,6 +2,7 @@
     min-height: 625px;
     padding: 100px 70px;
     box-sizing: border-box;
+    background-color: #272727;
   }
   
   .techs__description-title {
