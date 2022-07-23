@@ -1,3 +1,20 @@
 * {
   outline: solid red 1px;
 }
+
+.blok__title {
+  margin: 0;
+  padding: 0;
+  width: 600px;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.21;
+  letter-spacing: -0.04em;
+}
+
+.blok__title-line {
+  border-bottom: solid 1px #DADADA;
+  box-sizing: border-box;
+  height: 1px;
+  margin: 22px auto 0;
+}
