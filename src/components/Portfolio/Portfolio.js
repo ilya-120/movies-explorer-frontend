@@ -7,14 +7,14 @@ const Portfolio = () => {
       <ul className='portfolio__projects'>
         <li className="portfolio__link-item">
           <a className='portfolio__link' rel='noreferrer' href='https://github.com/ilya-120/how-to-learn' target='_blank'>
-          <span className='portfolio__text-link'>Статичный сайт</span>
-          <span className='portfolio__arrow-link'>↗</span>
+            <span className='portfolio__text-link'>Статичный сайт</span>
+            <span className='portfolio__arrow-link'>↗</span>
           </a>
         </li>
         <li className="portfolio__link-item">
           <a className='portfolio__link' rel='noreferrer' href='https://github.com/ilya-120/russian-travel' target='_blank'>
-          <span className='portfolio__text-link'>Адаптивный сайт</span>
-          <span className='portfolio__arrow-link'>↗</span>
+            <span className='portfolio__text-link'>Адаптивный сайт</span>
+            <span className='portfolio__arrow-link'>↗</span>
           </a>
         </li>
         <li className="portfolio__link-item">
