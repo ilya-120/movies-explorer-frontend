@@ -1,4 +1,4 @@
-Open [https://ilya120.nomoreparties.sbs/](deploy) to view it in your browser.
+Open [deploy](https://ilya120.nomoreparties.sbs) to view it in your browser.
 
 
 # Getting Started with Create React App
