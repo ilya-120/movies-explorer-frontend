@@ -43,3 +43,22 @@
   line-height: 1.33;
   font-weight: 500;
 }
+
+@media screen and (max-width: 533px) {
+  .header__link {
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .header__button {
+    width: 54px;
+    height: 26px;
+    margin-left: 14px;
+
+  }
+
+  .header__button-text {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+}
