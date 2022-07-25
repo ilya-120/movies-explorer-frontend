@@ -70,4 +70,12 @@
     font-size: 31px;
     line-height: 1.26;
   }
+
+  .promo__logo {
+    position: unset;
+    width: 680px;
+    height: 230px;
+    display: block;
+    max-width: 100vw;
+  }
 }
