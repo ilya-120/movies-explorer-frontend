@@ -72,10 +72,8 @@
   }
 
   .promo__logo {
-    position: unset;
-    width: 680px;
+    width: 320px;
     height: 230px;
-    display: block;
-    max-width: 100vw;
+    object-fit: cover;
   }
 }
