@@ -72,7 +72,8 @@
   }
 
   .promo__logo {
-    width: 320px;
+    width: 100vw;
+    max-width: 680px;
     height: 230px;
     object-fit: cover;
   }

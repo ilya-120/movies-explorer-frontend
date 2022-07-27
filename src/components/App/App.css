@@ -21,6 +21,7 @@
 
 @media screen and (max-width: 767px) {
   .blok__title {
+    max-width: 320px;
     font-size: 18px;
     line-height: 1.22;
   }
