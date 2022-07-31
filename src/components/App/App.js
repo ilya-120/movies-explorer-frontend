@@ -5,6 +5,7 @@ import NotFound from '../NotFound/NotFound';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import './App.css';
+import Profile from '../Profile/Profile';
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
             element={
               <Login
                 email={'pochta@yandex.ru'} />
+            } />
+          <Route path="/profile"
+            element={
+              <Profile
+                loggedIn={true}
+                userName={'Виталий'}
+                email={'pochta@yandex.ru'}
+              />
             } />
           <Route path="/"
             element={
