@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Main from '../Main/Main';
 import NotFound from '../NotFound/NotFound';
@@ -8,6 +8,13 @@ import './App.css';
 import Profile from '../Profile/Profile';
 
 function App() {
+
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+  function handleMenuOpen() {
+    setMenuOpen(!isMenuOpen);
+  }
+
   return (
     <div className="root">
       <Routes>
@@ -29,11 +36,13 @@ function App() {
                 loggedIn={true}
                 userName={'Виталий'}
                 email={'pochta@yandex.ru'}
+                isMenuOpen={isMenuOpen}
+                onClicOpen={handleMenuOpen}
               />
             } />
           <Route path="/"
             element={
-              <Main loggedIn={false} />
+              <Main />
             } />
           <Route path="*"
             element={

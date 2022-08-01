@@ -4,12 +4,20 @@ import '../Login/Login.css';
 import Header from '../Header/Header.js';
 import { Link } from 'react-router-dom';
 
-function Profile({ loggedIn, userName, email }) {
+function Profile({ loggedIn, userName, email, isMenuOpen, onClicOpen }) {
+  function handleSubmit(evt) {
+    evt.preventDefault();
+  }
   return (
     <>
-      <Header loggedIn={loggedIn} />
+      <Header
+        loggedIn={loggedIn}
+        isMenuOpen={isMenuOpen}
+        onClicOpen={onClicOpen}
+      />
       <section className="profile">
         <form className="form profile__form"
+          onSubmit={handleSubmit}
           noValidate
         >
           <h2 className="profile__title">Привет, {userName}!</h2>
