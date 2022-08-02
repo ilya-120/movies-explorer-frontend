@@ -26,7 +26,7 @@ function Navigation({ loggedIn, isMenuOpen, onClicOpen }) {
             </Link>
           </div>
         </>)}
-      <div className={`header__burger-menu ${isMenuOpen && 'header__burger-menu_activ'}`}>
+      <div className={`header__burger-menu ${isMenuOpen && 'header__burger-menu_activ .profile_background-color'}`}>
         <NavLink to="/" className={(navData) => (navData.isActive ? 'header__link_burger-menu_activ header__link' : 'header__link_burger-menu header__link')}>Главная</NavLink>
         <NavLink to="/movies" className={(navData) => (navData.isActive ? 'header__link_burger-menu_activ header__link' : 'header__link_burger-menu header__link')}>Фильмы</NavLink>
         <NavLink to="/saved-movies" className={(navData) => (navData.isActive ? 'header__link_burger-menu_activ header__link' : 'header__link_burger-menu header__link')}>Сохранённые фильмы</NavLink>

@@ -6,6 +6,10 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import './App.css';
 import Profile from '../Profile/Profile';
+import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import { movies } from '../../utils/movies-list';
+import { favoriteMovies } from '../../utils/favorite-movies-list';
 
 function App() {
 
@@ -36,6 +40,23 @@ function App() {
                 loggedIn={true}
                 userName={'Виталий'}
                 email={'pochta@yandex.ru'}
+                isMenuOpen={isMenuOpen}
+                onClicOpen={handleMenuOpen}
+              />
+            } />
+          <Route path="/movies"
+            element={
+              <Movies
+                loggedIn={true}
+                movies={movies}
+                isMenuOpen={isMenuOpen}
+                onClicOpen={handleMenuOpen}
+              />
+            } />
+          <Route path="/saved-movies"
+            element={
+              <SavedMovies loggedIn={true}
+                movies={favoriteMovies}
                 isMenuOpen={isMenuOpen}
                 onClicOpen={handleMenuOpen}
               />
