@@ -43,7 +43,7 @@ function Register({ onRegister, userName, email }) {
           onChange={handleChange}
           value={enteredValues.name || ''}
         />
-        <span id="email-error" className="login__error">{errors.name}</span>
+        <span id="name-error" className="login__error">{errors.name}</span>
         <label className="login__label">E-mail</label>
         <input
           className="login__input login__input_blue"

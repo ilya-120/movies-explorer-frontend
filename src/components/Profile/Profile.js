@@ -3,10 +3,16 @@ import './Profile.css'
 import '../Login/Login.css';
 import Header from '../Header/Header.js';
 import { Link } from 'react-router-dom';
+import UseForm from '../UseForm';
 
 function Profile({ loggedIn, userName, email, isMenuOpen, onClicOpen }) {
+  const { enteredValues, errors, isFormValid, handleChange } = UseForm({});
   function handleSubmit(evt) {
     evt.preventDefault();
+    if (!enteredValues.name || !enteredValues.email || !isFormValid) {
+      console.log(isFormValid);
+      return;
+    }
   }
   return (
     <>
@@ -29,9 +35,11 @@ function Profile({ loggedIn, userName, email, isMenuOpen, onClicOpen }) {
               type="Text"
               name="name"
               id="profileName"
-              value={userName}
               required
+              onChange={handleChange}
+              value={enteredValues.name || userName}
             />
+            <span id="name-error" className="login__error">{errors.name}</span>
           </div>
           <div className="profile__input-container">
             <label className="profile__label">E-mail</label>
@@ -41,9 +49,11 @@ function Profile({ loggedIn, userName, email, isMenuOpen, onClicOpen }) {
               type="Email"
               name="email"
               id="profileEmail"
-              value={email}
               required
+              onChange={handleChange}
+              value={enteredValues.email || email}
             />
+            <span id="email-error" className="login__error">{errors.email}</span>
           </div>
           <button type="submit" className="login__button login__button_profile">Редактировать</button>
           <Link to="/signin" className="login__link login__link_profile">Выйти из аккаунта</Link>
