@@ -35,6 +35,7 @@ function Profile({ loggedIn, userName, email, isMenuOpen, onClicOpen }) {
               type="Text"
               name="name"
               id="profileName"
+              placeholder={userName}
               required
               onChange={handleChange}
               value={enteredValues.name || userName}
@@ -49,8 +50,9 @@ function Profile({ loggedIn, userName, email, isMenuOpen, onClicOpen }) {
               type="Email"
               name="email"
               id="profileEmail"
+              placeholder={userName}
               required
-              onChange={handleChange}
+              onChange={email}
               value={enteredValues.email || email}
             />
             <span id="email-error" className="login__error">{errors.email}</span>
