@@ -1,0 +1,136 @@
+.about {
+  padding: 110px 70px 0;
+  background-color: #202020;
+  min-height: 608px;
+  box-sizing: border-box;
+}
+
+.about__info {
+  padding: 70px 0 110px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px 40px;
+}
+
+.about__info-title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.21;
+  letter-spacing: -0.04em;
+}
+
+.about__info-text {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.43;
+}
+
+.about__times {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 36px 1fr;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+  text-align: center;
+}
+
+.about__times-backend {
+  background-color: #3DDC84;
+  color: #000000;
+  padding: 9px 0;
+}
+
+.about__times-frontend {
+  background-color: #303030;
+  color: #ffffff;
+  padding: 9px 0;
+}
+
+.about__times-description {
+  color: #8B8B8B;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 1023px) {
+  .about {
+    min-height: 585px;
+    padding: 91px 50px;
+  }
+
+  .about__info {
+    gap: 22px 30px;
+    padding-bottom: 93px;
+  }
+
+  .about__info-text {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .about__times {
+    grid-template-columns: 1fr 3.77fr;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .about {
+    min-height: 641px;
+    padding: 70px 18px;
+  }
+
+  #title-1 {
+    grid-area: t1;
+  }
+
+  #title-2 {
+    grid-area: t2;
+  }
+
+  #text-1 {
+    grid-area: t3;
+  }
+
+  #text-2 {
+    grid-area: t4;
+  }
+
+  .about__info {
+    grid-template-columns: 1fr;
+    grid-template-areas: "t1"
+      "t3"
+      "t2"
+      "t4";
+    gap: 16px;
+    padding: 20px 0 60px;
+  }
+
+  .about__info-title {
+    font-size: 18px;
+    line-height: 1.21;
+    margin-top: 40px;
+  }
+
+  .about__info-text {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .about__times {
+    display: grid;
+    grid-template-columns: 1fr 1.84fr;
+    grid-template-rows: 35px 1fr;
+    font-size: 11px;
+    line-height: 1.16;
+  }
+
+  .about__times-backend {
+    padding: 12px 0;
+  }
+
+  .about__times-frontend {
+    padding: 12px 0;
+  }
+}

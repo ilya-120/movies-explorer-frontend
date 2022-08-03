@@ -1,0 +1,40 @@
+.header {
+  background-color: #073042;
+  padding: 0 70px;
+  min-height: 74px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header_isloggedIn {
+  background-color: #202020;
+}
+
+.header__logo {
+  background-color: #073042;
+  display: block;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.header__logo_isloggedIn {
+  background-color: #202020;
+}
+
+
+.header__logo:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 1023px) {
+  .header {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    padding: 0 14px;
+  }
+}
