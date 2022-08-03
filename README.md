@@ -1,10 +1,10 @@
-# [Деплой проекта](https://ilya120.nomoreparties.sbs).
+## [Деплой проекта](https://ilya120.nomoreparties.sbs)
 
 
-# [Макет](https://www.figma.com/file/fM4N9nojHjOqd4Gt4cVJWe/Diploma-(Copy)?node-id=932%3A3228).
+## [Макет](https://www.figma.com/file/fM4N9nojHjOqd4Gt4cVJWe/Diploma-(Copy)?node-id=932%3A3228)
 
 
-# Getting Started with Create React App
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
