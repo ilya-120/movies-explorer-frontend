@@ -8,6 +8,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList.js';
 function Movies({ loggedIn, movies, isMenuOpen, onClicOpen }) {
   return (
     <>
+      <div className={`${isMenuOpen && 'background-overlay_activ'}`}></div>
       <Header
         loggedIn={loggedIn}
         isMenuOpen={isMenuOpen}

@@ -16,6 +16,7 @@ function Profile({ loggedIn, userName, email, isMenuOpen, onClicOpen }) {
   }
   return (
     <>
+      <div className={`${isMenuOpen && 'background-overlay_activ'}`}></div>
       <Header
         loggedIn={loggedIn}
         isMenuOpen={isMenuOpen}

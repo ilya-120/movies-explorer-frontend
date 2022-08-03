@@ -7,7 +7,8 @@ import Footer from '../Footer/Footer.js';
 
 function SavedMovies({ loggedIn, movies, isMenuOpen, onClicOpen }) {
   return (
-    <div>
+    <>
+      <div className={`${isMenuOpen && 'background-overlay_activ'}`}></div>
       <Header
         loggedIn={loggedIn}
         isMenuOpen={isMenuOpen}
@@ -17,7 +18,7 @@ function SavedMovies({ loggedIn, movies, isMenuOpen, onClicOpen }) {
       <MoviesCardList movies={movies} />
       {/*<Preloader/>*/}
       <Footer />
-    </div>
+    </>
   )
 }
 
