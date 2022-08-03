@@ -130,6 +130,7 @@
   }
 
   .header__burger-menu_activ {
+    position: fixed;
     width: 520px;
     margin-right: 0;
     min-height: 1024px;
@@ -137,7 +138,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
     z-index: 1;
     top: 0;
     right: 0;
@@ -189,8 +189,9 @@
   }
 
   .header__link {
-    font-size: 10px;
-    line-height: 16px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.22;
   }
 
   .header__button {
@@ -215,7 +216,9 @@
   }
 
   .header__button_burger-menu {
+    width: 100px;
     margin: 419px auto 0;
+
   }
 
   .header__link_burger-menu_activ {
@@ -226,5 +229,11 @@
   .header__link_burger-menu {
     min-height: 31px;
     margin-bottom: 15px;
+  }
+
+  .header__button-text_isloggedIn {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.33;
   }
 }

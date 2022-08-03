@@ -9,7 +9,7 @@ import Footer from '../Footer/Footer';
 
 function Main() {
   return (
-    <>
+    <main>
       <Header
         loggedIn={false}
       />
@@ -19,7 +19,7 @@ function Main() {
       <AboutMe />
       <Portfolio />
       <Footer />
-    </>
+    </main>
   )
 }
 

@@ -144,6 +144,10 @@
   transition: .3s;
 }
 
+.search-form__checkbox-slider:hover {
+  opacity: 0.8;
+}
+
 .search-form__checkbox-slider:before {
   position: absolute;
   content: "";
