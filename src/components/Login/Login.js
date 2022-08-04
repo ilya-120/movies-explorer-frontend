@@ -4,7 +4,7 @@ import '../Login/Login.css';
 import UseForm from '../UseForm';
 import logo from '../../images/logo.svg';
 
-function Login({ onLogin, email }) {
+function Login({ onLogin }) {
   const { enteredValues, errors, isFormValid, handleChange } = UseForm({});
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -36,7 +36,7 @@ function Login({ onLogin, email }) {
           type="Email"
           name="email"
           id="email"
-          placeholder={email}
+          placeholder=""
           required
           minLength="2"
           maxLength="50"

@@ -41,8 +41,8 @@ function Profile({ loggedIn, userName, email, isMenuOpen, onClicOpen }) {
               onChange={handleChange}
               value={enteredValues.name || userName}
             />
-            <span id="name-error" className="login__error">{errors.name}</span>
           </div>
+          <span id="name-error" className="login__error">{errors.name}</span>
           <div className="profile__input-container">
             <label className="profile__label">E-mail</label>
             <input
@@ -51,13 +51,13 @@ function Profile({ loggedIn, userName, email, isMenuOpen, onClicOpen }) {
               type="Email"
               name="email"
               id="profileEmail"
-              placeholder={userName}
+              placeholder={email}
               required
-              onChange={email}
+              onChange={handleChange}
               value={enteredValues.email || email}
             />
-            <span id="email-error" className="login__error">{errors.email}</span>
           </div>
+          <span id="email-error" className="login__error">{errors.email}</span>
           <button type="submit" className="login__button login__button_profile">Редактировать</button>
           <Link to="/signin" className="login__link login__link_profile">Выйти из аккаунта</Link>
         </form>

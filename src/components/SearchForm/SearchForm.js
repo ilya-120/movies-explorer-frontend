@@ -1,27 +1,39 @@
 import React from 'react';
 import './SearchForm.css'
+import UseForm from '../UseForm';
 
 function SearchForm() {
+  const { enteredValues, errors, isFormValid, handleChange } = UseForm({});
   function handleSubmit(evt) {
     evt.preventDefault();
+    if (!enteredValues.searchFilm || !isFormValid) {
+      console.log("Нужно ввести ключевое слово");
+      return;
+    }
   }
   return (
     <form
-      className="search-form"
+      className="form search-form"
       onSubmit={handleSubmit}
+      noValidate
     >
       <div className="search-form__container">
         <input
           className="search-form__input"
           type="search"
-          name="search-film"
+          name="searchFilm"
           placeholder="Фильм"
-          required />
+          minLength="2"
+          maxLength="50"
+          required
+          onChange={handleChange}
+          value={enteredValues.searchFilm || ''} />
         <button
           className="search-form__button"
           type="submit"
           name="submit-search">Найти</button>
       </div>
+      <span id="searchFilm-error" className="login__error">{errors.searchFilm}</span>
       <div className="search-form__filter">
         <label className="search-form__filter-checkbox">
           <input type="checkbox" />

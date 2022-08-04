@@ -12,6 +12,10 @@
 
 .profile__form {
   width: 410px;
+  min-height: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .profile__title {
@@ -26,11 +30,10 @@
   width: 410px;
   display: flex;
   border-bottom: 1px solid #424242;
-  padding-bottom: 5px;
+  padding-bottom: 12px;
 }
 
 .profile__input-container:last-of-type {
-  padding: 8px 0 0;
   border-bottom: none;
 }
 

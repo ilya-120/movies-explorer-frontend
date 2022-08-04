@@ -4,7 +4,7 @@ import '../Login/Login.css';
 import UseForm from '../UseForm';
 import logo from '../../images/logo.svg';
 
-function Register({ onRegister, userName, email }) {
+function Register({ onRegister }) {
   const { enteredValues, errors, isFormValid, handleChange } = UseForm({});
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -36,7 +36,7 @@ function Register({ onRegister, userName, email }) {
           type="Text"
           name="name"
           id="name"
-          placeholder={userName}
+          placeholder=""
           required
           minLength="2"
           maxLength="30"
@@ -51,7 +51,7 @@ function Register({ onRegister, userName, email }) {
           type="Email"
           name="email"
           id="email"
-          placeholder={email}
+          placeholder=""
           required
           minLength="2"
           maxLength="50"
@@ -66,14 +66,14 @@ function Register({ onRegister, userName, email }) {
           type="Password"
           name="password"
           id="password"
-          placeholder="••••••••••••••"
+          placeholder=""
           required
           minLength="6"
           maxLength="200"
           onChange={handleChange}
           value={enteredValues.password || ''}
         />
-        <span id="password-error" className="login__error  login__error_visible">Что-то пошло не так...</span>
+        <span id="password-error" className="login__error">{errors.password}</span>
         <button type="submit" className="login__button login__button_register">Зарегистрироваться</button>
         <p className="login__subtitle">Уже зарегистрированы? <Link to="/signin" className="login__link">Войти</Link></p>
       </form>
