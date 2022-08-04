@@ -154,6 +154,10 @@
   margin-bottom: 22px;
 }
 
+.header__link_burger-menu_activ:first-of-type {
+  margin-top: 153px;
+}
+
 .header__link_burger-menu {
   min-height: 28px;
   font-weight: 500;
@@ -199,6 +203,11 @@
     height: 26px;
     margin-left: 14px;
 
+  }
+
+  .header__link_nologgedIn {
+    font-size: 10px;
+    line-height: 1.6;
   }
 
   .header__button-text {

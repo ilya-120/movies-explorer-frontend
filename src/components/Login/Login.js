@@ -59,7 +59,7 @@ function Login({ onLogin }) {
           value={enteredValues.password || ''}
         />
         <span id="password-error" className="login__error">{errors.password}</span>
-        <button type="submit" className="login__button">Зарегистрироваться</button>
+        <button type="submit" className="login__button">Войти</button>
         <p className="login__subtitle">Еще не зарегистрированы? <Link to="/signup" className="login__link">Регистрация</Link></p>
       </form>
     </section>

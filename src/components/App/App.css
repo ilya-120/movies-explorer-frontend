@@ -19,18 +19,6 @@
   margin: 22px auto 0;
 }
 
-@media screen and (max-width: 767px) {
-  .blok__title {
-    max-width: 320px;
-    font-size: 18px;
-    line-height: 1.22;
-  }
-
-  .blok__title-line {
-    margin: 28px auto 0;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .background-overlay_activ {
     position: fixed;
@@ -43,5 +31,21 @@
     width: 100%;
     height: 100%;
     z-index: 1;
+  }
+
+  .blok__title {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .blok__title {
+    max-width: 320px;
+    font-size: 18px;
+    line-height: 1.22;
+  }
+
+  .blok__title-line {
+    margin: 28px auto 0;
   }
 }
