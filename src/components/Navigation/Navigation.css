@@ -100,8 +100,11 @@
 
 @media screen and (max-width: 768px) {
   .navigation__button_action_close {
-    width: 16px;
-    height: 16px;
+    position: fixed;
+    top: 28px;
+    right: 28px;
+    width: 18px;
+    height: 18px;
     background-image: url(../../images/Close-Icon.svg);
     background-color: #202020;
     background-repeat: no-repeat;
@@ -179,6 +182,14 @@
   .navigation__menu-button-null {
     width: 40px;
     height: 43px;
+  }
+
+  .navigation__button_action_close {
+    position: fixed;
+    top: 30px;
+    right: 21px;
+    width: 16px;
+    height: 16px;
   }
 
   .navigation__button_action_open {

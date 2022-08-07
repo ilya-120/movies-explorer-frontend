@@ -7,10 +7,14 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-function Main({ loggedIn, isMenuOpen, onClicOpen }) {
+function Main({ loggedIn,
+  isMenuOpen,
+  onClicOpen,
+  onClickCloseMenu }) {
   return (
     <main>
-      <div className={`${isMenuOpen && 'background-overlay_activ'}`}></div>
+      <div className={`${isMenuOpen && 'background-overlay_activ'}`}
+        onClick={onClickCloseMenu}></div>
       <Header
         loggedIn={loggedIn}
         isMenuOpen={isMenuOpen}

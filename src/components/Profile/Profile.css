@@ -76,6 +76,11 @@
   color: #EE3465;
 }
 
+.login__button_profile_disabled:hover {
+  opacity: 1;
+  cursor: default;
+}
+
 @media screen and (max-width: 1023px) {
   .profile {
     min-height: 950px;

@@ -35,9 +35,23 @@
   opacity: 0.8;
 }
 
+.movies-card-list__text {
+  display: none;
+  margin: 0;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.21;
+  text-align: center;
+  color: #8B8B86;
+  min-height: 20px;
+}
+
+.movies-card-list__text_visible {
+  display: block;
+}
+
 @media screen and (max-width: 1023px) {
   .movies-card-list {
-    max-height: 1140px;
     padding: 70px 30px 30px;
     grid-template-columns: repeat(auto-fill, 339px);
     gap: 36px 30px;
@@ -48,7 +62,6 @@
 
 @media screen and (max-width: 767px) {
   .movies-card-list {
-    max-height: 1244px;
     padding: 40px 10px 30px;
     grid-template-columns: repeat(auto-fill, 300px);
     gap: 16px;

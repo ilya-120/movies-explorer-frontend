@@ -137,6 +137,11 @@
   opacity: 0.8;
 }
 
+.login__button_disabled:hover {
+  cursor: default;
+  opacity: 1;
+}
+
 @media screen and (max-width: 1023px) {
   .login {
     padding: 232px 0;

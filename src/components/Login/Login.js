@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import '../Login/Login.css';
 import UseForm from '../UseForm';
 import logo from '../../images/logo.svg';
+import Preloader from '../Preloader/Preloader';
 
-function Login({ onLogin }) {
+function Login({ onLogin, showPreloader }) {
   const { enteredValues, errors, isFormValid, handleChange } = UseForm({});
   function handleSubmit(evt) {
     evt.preventDefault();
     if (!enteredValues.email || !enteredValues.password || !isFormValid) {
-      console.log(isFormValid);
       return;
     }
     onLogin(enteredValues.email, enteredValues.password);
@@ -29,6 +29,7 @@ function Login({ onLogin }) {
           />
         </Link>
         <h2 className="login__title">Рады видеть!</h2>
+        <Preloader showPreloader={showPreloader} />
         <label className="login__label">E-mail</label>
         <input
           className="login__input"
@@ -59,7 +60,11 @@ function Login({ onLogin }) {
           value={enteredValues.password || ''}
         />
         <span id="password-error" className="login__error">{errors.password}</span>
-        <button type="submit" className="login__button">Войти</button>
+        <button
+          type="submit"
+          disabled={!isFormValid}
+          className={isFormValid ? 'login__button' : 'login__button login__button_disabled'}
+        >Войти</button>
         <p className="login__subtitle">Еще не зарегистрированы? <Link to="/signup" className="login__link">Регистрация</Link></p>
       </form>
     </section>

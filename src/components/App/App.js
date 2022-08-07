@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Main from '../Main/Main';
 import NotFound from '../NotFound/NotFound';
 import Register from '../Register/Register';
@@ -8,19 +8,28 @@ import './App.css';
 import Profile from '../Profile/Profile';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import { movies } from '../../utils/movies-list';
-import { favoriteMovies } from '../../utils/favorite-movies-list';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRoute from '../ProtectedRoute';
 import * as auth from '../../utils/MainApi';
+import InfoTooltip from '../../components/Popup/InfoTooltip';
+import { mainApi } from '../../utils/MainApi';
+import VideoPopup from '../Popup/VideoPopup';
 
 function App() {
 
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(true);
+  const [isSuccessful, setIsSuccessful] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [isClose, setIsClose] = useState(false);
+  const [movie, setMovie] = useState({});
+  const [showPreloader, setShowPreloader] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [isVideoPopupOpen, setIsVideoPopupOpen] = useState(false);
+  const [isSearchError, setIsSearchError] = useState(false);
+  const [tooltipText, setTooltipText] = useState('');
+  const [savedMovies, setSavedMovies] = useState([]);
+
   const navigate = useNavigate();
 
   function handleMenuOpen() {
@@ -35,8 +44,7 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            setEmail(res.email);
-            setName(res.name);
+            setCurrentUser({ name: res.name, email: res.email, id: res._id })
           }
         })
         .catch((err) => {
@@ -46,7 +54,93 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (loggedIn) {
+      if (localStorage.getItem('savedMovies')) {
+        setSavedMovies((JSON.parse(localStorage.getItem('savedMovies'))));
+      } else {
+        getSavedMovies();
+      }
+    }
+  }, [loggedIn])
+
+  function updateSavedMovies(savedMovies) {
+    setSavedMovies(savedMovies);
+    localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
+  }
+
+  function getSavedMovies() {
+    setShowPreloader(true);
+    const jwt = localStorage.getItem('jwt');
+    mainApi.getMovies(jwt)
+      .then(data => {
+        updateSavedMovies(data);
+        setIsSearchError(false);
+      })
+      .catch(err => {
+        setTooltipText(`Ошибка загрузки данных: ${err}`);
+        setIsSuccessful(false);
+        setIsInfoTooltipOpen(true);
+        setIsSearchError(true);
+      })
+      .finally(() => setShowPreloader(false));
+  }
+
+  function onMovieSave(movie) {
+    const isSaved = savedMovies?.some(i => i.movieId === movie.id);
+    const jwt = localStorage.getItem('jwt');
+    if (!isSaved) {
+      mainApi
+        .postMovie(movie, jwt)
+        .then((newMovie) => {
+          updateSavedMovies([newMovie, ...savedMovies])
+          setTooltipText('Фильм успешно добавлен в избранное.');
+          setIsSuccessful(true);
+          setIsInfoTooltipOpen(true);
+        })
+        .catch((err) => {
+          setTooltipText(`Ошибка загрузки данных: ${err}`);
+          setIsSuccessful(false);
+          setIsInfoTooltipOpen(true);
+        });
+    } else {
+      const id = savedMovies.find(item => item.movieId === movie.id)._id;
+      mainApi
+        .deleteMovie(id, jwt)
+        .then(() => {
+          updateSavedMovies(savedMovies.filter(movie => movie._id === id ? null : movie));
+          setTooltipText('Фильм успешно удален из избранного.');
+          setIsSuccessful(true);
+          setIsInfoTooltipOpen(true);
+        })
+        .catch((err) => {
+          setTooltipText(`Ошибка удаления данных: ${err}`);
+          setIsSuccessful(false);
+          setIsInfoTooltipOpen(true);
+        })
+    }
+  }
+
+  function onMovieDel(movie) {
+    const jwt = localStorage.getItem('jwt');
+    const id = movie._id;
+    mainApi
+      .deleteMovie(id, jwt)
+      .then(() => {
+        updateSavedMovies(savedMovies.filter(movie => movie._id === id ? null : movie));
+        setTooltipText('Фильм успешно удален из избранного.');
+        setIsSuccessful(true);
+        setIsInfoTooltipOpen(true);
+      })
+      .catch((err) => {
+        setTooltipText(`Ошибка удаления данных: ${err}`);
+        setIsSuccessful(false);
+        setIsInfoTooltipOpen(true);
+      })
+  }
+
   function onLogin(email, password) {
+    setShowPreloader(true);
     auth
       .signin(email, password)
       .then(res => {
@@ -57,11 +151,13 @@ function App() {
         }
       })
       .catch((err) => {
-        setIsRegistrationSuccessful(false);
-        console.log(`Ошибка входа: ${err}`);
+        setTooltipText(`Ошибка входа: ${err}`);
+        setIsSuccessful(false);
+        setIsInfoTooltipOpen(true);
       })
       .finally(() => {
         navigate('/movies');
+        setShowPreloader(false);
       })
   }
 
@@ -70,41 +166,35 @@ function App() {
     auth
       .checkToken(jwt)
       .then((res) => {
+        console.log(res);
         setCurrentUser({ name: res.name, email: res.email, id: res._id })
-        setEmail(res.email);
-        setName(res.name);
       })
       .catch((err) => {
-        console.log(`Ошибка загрузки данных: ${err}`)
+        setTooltipText(`Ошибка загрузки данных: ${err}`);
+        setIsSuccessful(false);
+        setIsInfoTooltipOpen(true);
       });
-    function handleEscClose(evt) {
-      if (evt.key === 'Escape') {
-        console.log("esc")
-      }
-    }
-    document.addEventListener('keydown', handleEscClose);
-    return () =>
-      document.removeEventListener('keydown', handleEscClose);
   }
 
-  function onRegister(email, password, name) {
+  function onRegister(name, email, password) {
+    setShowPreloader(true);
     auth
-      .signup(email, password, name)
+      .signup(name, email, password)
       .then(res => {
         if (res._id) {
-          setIsRegistrationSuccessful(true);
-          navigate('/signin');
+          onLogin(email, password)
+          setIsSuccessful(true);
+          navigate('/movies');
         } else {
-          setIsRegistrationSuccessful(false);
+          setIsSuccessful(false);
         }
       })
       .catch((err) => {
-        setIsRegistrationSuccessful(false);
-        console.log(`Ошибка регистрации: ${err}`);
+        setTooltipText(`Ошибка регистрации: ${err}`);
+        setIsSuccessful(false);
+        setIsInfoTooltipOpen(true);
       })
-      .finally(() =>
-        console.log(isRegistrationSuccessful)
-      );
+      .finally(() => setShowPreloader(false));
   }
 
   function handleUpdateProfile(name, email) {
@@ -113,23 +203,38 @@ function App() {
       .setUserInfo(jwt, name, email)
       .then((res) => {
         setCurrentUser({ name: res.name, email: res.email, id: res._id })
-        setEmail(res.email);
-        setName(res.name);
       })
       .catch((err) => {
-        console.log(`Ошибка загрузки данных: ${err}`)
+        setTooltipText(`Ошибка загрузки данных: ${err}`);
+        setIsSuccessful(false);
+        setIsInfoTooltipOpen(true);
       })
-      .finally(() =>
-        console.log("Успешно")
-      );
   }
 
   function onSignOut() {
     setLoggedIn(false);
-    setEmail('');
-    setName('');
     navigate('/signin');
     localStorage.removeItem('jwt');
+    localStorage.removeItem('savedFilteredMovies');
+    localStorage.removeItem('savedInputSearch');
+    localStorage.removeItem('savedShort');
+    localStorage.removeItem('savedMovies');
+    localStorage.removeItem('beatFilmMovies');
+    localStorage.removeItem('beatFilmInputSearch');
+    localStorage.removeItem('beatFilmFilteredMovies');
+    localStorage.removeItem('beatFilmShort');
+  }
+
+  function closeAllPopups() {
+    setIsInfoTooltipOpen(false);
+    setIsVideoPopupOpen(false);
+    setIsClose(false)
+  }
+
+  function handleOpenTrailerClick(movie) {
+    setIsVideoPopupOpen(true)
+    setIsClose(true)
+    setMovie(movie);
   }
 
   return (
@@ -143,46 +248,63 @@ function App() {
                   loggedIn={loggedIn}
                   isMenuOpen={isMenuOpen}
                   onClicOpen={handleMenuOpen}
+                  onClickCloseMenu={handleMenuOpen}
                 />
               } />
             <Route path="/signup"
-              element={
-                <Register
+              element={!loggedIn
+                ? <Register
                   onRegister={onRegister}
+                  showPreloader={showPreloader} />
+                : <Navigate to="/movies"
                 />
               } />
             <Route path="/signin"
-              element={
-                <Login
-                  onLogin={onLogin} />
+              element={!loggedIn
+                ? <Login onLogin={onLogin}
+                  showPreloader={showPreloader} />
+                : <Navigate to="/movies"
+                />
               } />
             <Route path="/profile"
               element={
-                <Profile
+                <ProtectedRoute
+                  component={Profile}
                   loggedIn={loggedIn}
-                  userName={name}
-                  email={email}
                   isMenuOpen={isMenuOpen}
                   onClicOpen={handleMenuOpen}
                   onUpdateProfile={handleUpdateProfile}
                   onClick={onSignOut}
+                  onClickCloseMenu={handleMenuOpen}
                 />
               } />
             <Route path="/movies"
               element={
-                <Movies
+                <ProtectedRoute
+                  component={Movies}
                   loggedIn={loggedIn}
-                  movies={movies}
+                  savedMovies={savedMovies}
+                  onMovieSave={onMovieSave}
                   isMenuOpen={isMenuOpen}
                   onClicOpen={handleMenuOpen}
+                  onClicPopupOpen={handleOpenTrailerClick}
+                  onClickCloseMenu={handleMenuOpen}
                 />
               } />
             <Route path="/saved-movies"
               element={
-                <SavedMovies loggedIn={loggedIn}
-                  movies={favoriteMovies}
+                <ProtectedRoute
+                  component={SavedMovies}
+                  loggedIn={loggedIn}
+                  movies={savedMovies}
                   isMenuOpen={isMenuOpen}
                   onClicOpen={handleMenuOpen}
+                  showPreloader={showPreloader}
+                  getMovies={getSavedMovies}
+                  isSearchError={isSearchError}
+                  onMovieDel={onMovieDel}
+                  onClicPopupOpen={handleOpenTrailerClick}
+                  onClickCloseMenu={handleMenuOpen}
                 />
               } />
             <Route path="*"
@@ -191,6 +313,20 @@ function App() {
               } />
           </>
         </Routes>
+        <InfoTooltip
+          name='info-tooltip'
+          isSuccess={isSuccessful}
+          isOpen={isInfoTooltipOpen}
+          onClose={closeAllPopups}
+          tooltipText={tooltipText}
+        />
+        <VideoPopup
+          name='video'
+          isOpen={isVideoPopupOpen}
+          onClose={closeAllPopups}
+          movie={movie}
+          isClose={isClose}
+        />
       </div>
     </CurrentUserContext.Provider >
   );

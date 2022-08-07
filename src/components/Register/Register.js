@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import '../Login/Login.css';
 import UseForm from '../UseForm';
 import logo from '../../images/logo.svg';
+import Preloader from '../Preloader/Preloader';
 
-function Register({ onRegister }) {
+function Register({ onRegister, showPreloader }) {
   const { enteredValues, errors, isFormValid, handleChange } = UseForm({});
   function handleSubmit(evt) {
     evt.preventDefault();
     if (!enteredValues.name || !enteredValues.email || !enteredValues.password || !isFormValid) {
-      console.log(isFormValid);
       return;
     }
     onRegister(enteredValues.name, enteredValues.email, enteredValues.password);
@@ -29,6 +29,7 @@ function Register({ onRegister }) {
           />
         </Link>
         <h2 className="login__title">Добро пожаловать!</h2>
+        <Preloader showPreloader={showPreloader} />
         <label className="login__label">Имя</label>
         <input
           className="login__input"
@@ -38,8 +39,7 @@ function Register({ onRegister }) {
           id="name"
           placeholder=""
           required
-          minLength="2"
-          maxLength="30"
+          pattern="[0-9A-Za-z -]{2,30}"
           onChange={handleChange}
           value={enteredValues.name || ''}
         />
@@ -74,7 +74,11 @@ function Register({ onRegister }) {
           value={enteredValues.password || ''}
         />
         <span id="password-error" className="login__error">{errors.password}</span>
-        <button type="submit" className="login__button login__button_register">Зарегистрироваться</button>
+        <button
+          type="submit"
+          disabled={!isFormValid}
+          className={!isFormValid ? 'login__button login__button_register' : 'login__button login__button_register login__button_disabled'}
+        >Зарегистрироваться</button>
         <p className="login__subtitle">Уже зарегистрированы? <Link to="/signin" className="login__link">Войти</Link></p>
       </form>
     </section>
