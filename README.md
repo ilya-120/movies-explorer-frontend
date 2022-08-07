@@ -1,4 +1,6 @@
-## [Деплой проекта](https://ilya120.nomoreparties.sbs)
+## [Пул реквест](https://github.com/ilya-120/movies-explorer-frontend/pull/2) https://github.com/ilya-120/movies-explorer-frontend/pull/2
+
+## [Деплой проекта](https://ilya120.nomoreparties.sbs) https://ilya120.nomoreparties.sbs
 
 
 ## [Макет](https://www.figma.com/file/fM4N9nojHjOqd4Gt4cVJWe/Diploma-(Copy)?node-id=932%3A3228)
