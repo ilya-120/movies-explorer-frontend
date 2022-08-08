@@ -43,7 +43,7 @@ function Register({ onRegister, showPreloader }) {
           onChange={handleChange}
           value={enteredValues.name || ''}
         />
-        <span id="name-error" className="login__error">{errors.name}</span>
+        <span id="name-error" className="login__error">{!isFormValid && errors.name ? 'поле Имя от 2 до 30 символов, содержит только латиницу, кириллицу, пробел или дефис.' : ''}</span>
         <label className="login__label">E-mail</label>
         <input
           className="login__input login__input_blue"

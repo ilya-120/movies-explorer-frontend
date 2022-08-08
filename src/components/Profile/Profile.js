@@ -46,14 +46,14 @@ function Profile({ loggedIn,
               type="Text"
               name="name"
               id="profileName"
-              placeholder={''}
+              placeholder=""
               required
               pattern="[A-Za-zА-Яа-яЁё\s-]{2,30}"
               onChange={handleChange}
               value={enteredValues.name || currentUser.name}
             />
           </div>
-          <span id="name-error" className="login__error">{errors.name}</span>
+          <span id="name-error" className="login__error">{errors.name ? 'поле Имя от 2 до 30 символов, содержит только латиницу, кириллицу, пробел или дефис.' : ''}</span>
           <div className="profile__input-container">
             <label className="profile__label">E-mail</label>
             <input
