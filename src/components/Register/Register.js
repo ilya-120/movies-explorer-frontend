@@ -39,7 +39,7 @@ function Register({ onRegister, showPreloader }) {
           id="name"
           placeholder=""
           required
-          pattern="[0-9A-Za-z -]{2,30}"
+          pattern="[A-Za-zА-Яа-яЁё\s-]{2,30}"
           onChange={handleChange}
           value={enteredValues.name || ''}
         />
@@ -77,7 +77,7 @@ function Register({ onRegister, showPreloader }) {
         <button
           type="submit"
           disabled={!isFormValid}
-          className={!isFormValid ? 'login__button login__button_register' : 'login__button login__button_register login__button_disabled'}
+          className={isFormValid ? 'login__button login__button_register' : 'login__button login__button_register login__button_disabled'}
         >Зарегистрироваться</button>
         <p className="login__subtitle">Уже зарегистрированы? <Link to="/signin" className="login__link">Войти</Link></p>
       </form>

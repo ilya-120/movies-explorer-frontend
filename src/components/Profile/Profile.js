@@ -48,7 +48,7 @@ function Profile({ loggedIn,
               id="profileName"
               placeholder={''}
               required
-              pattern="[0-9A-Za-z -]{2,30}"
+              pattern="[A-Za-zА-Яа-яЁё\s-]{2,30}"
               onChange={handleChange}
               value={enteredValues.name || currentUser.name}
             />
