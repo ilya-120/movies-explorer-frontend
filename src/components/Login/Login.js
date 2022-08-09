@@ -62,7 +62,7 @@ function Login({ onLogin, showPreloader }) {
         <span id="password-error" className="login__error">{errors.password}</span>
         <button
           type="submit"
-          disabled={!isFormValid}
+          disabled={!isFormValid || showPreloader}
           className={isFormValid ? 'login__button' : 'login__button login__button_disabled'}
         >Войти</button>
         <p className="login__subtitle">Еще не зарегистрированы? <Link to="/signup" className="login__link">Регистрация</Link></p>

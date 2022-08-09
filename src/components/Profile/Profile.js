@@ -13,13 +13,19 @@ function Profile({ loggedIn,
   onClick,
   onClickCloseMenu }) {
   const currentUser = useContext(CurrentUserContext);
-  const { enteredValues, errors, isFormValid, handleChange } = UseForm({});
+  const { enteredValues, errors, isFormValid, handleChange } = UseForm();
   const isNotChange = Boolean(currentUser.email === enteredValues.email && currentUser.name === enteredValues.name);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    if (!enteredValues.name || !enteredValues.email || !isFormValid) {
+    if (!isFormValid) {
       return;
+    }
+    if (!enteredValues.name) {
+      enteredValues.name = currentUser.name;
+    }
+    if (!enteredValues.email) {
+      enteredValues.email = currentUser.email;
     }
     onUpdateProfile(enteredValues.name, enteredValues.email);
   }
@@ -46,11 +52,10 @@ function Profile({ loggedIn,
               type="Text"
               name="name"
               id="profileName"
-              placeholder=""
               required
               pattern="[A-Za-zА-Яа-яЁё\s-]{2,30}"
               onChange={handleChange}
-              value={enteredValues.name || currentUser.name}
+              defaultValue={currentUser.name}
             />
           </div>
           <span id="name-error" className="login__error">{errors.name ? 'поле Имя от 2 до 30 символов, содержит только латиницу, кириллицу, пробел или дефис.' : ''}</span>
@@ -62,10 +67,9 @@ function Profile({ loggedIn,
               type="Email"
               name="email"
               id="profileEmail"
-              placeholder={''}
               required
               onChange={handleChange}
-              value={enteredValues.email || currentUser.email}
+              defaultValue={currentUser.email}
             />
           </div>
           <span id="email-error" className="login__error">{errors.email}</span>
@@ -74,7 +78,7 @@ function Profile({ loggedIn,
             className={`login__button login__button_profile ${(isFormValid && !isNotChange) ? '' : 'login__button_profile_disabled'}`}
             disabled={!isFormValid || isNotChange}
           >Редактировать</button>
-          <Link to="/signin" className="login__link login__link_profile" onClick={onClick}>Выйти из аккаунта</Link>
+          <Link to="/" className="login__link login__link_profile" onClick={onClick}>Выйти из аккаунта</Link>
         </form>
       </section>
     </>

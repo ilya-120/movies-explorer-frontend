@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import Main from '../Main/Main';
 import NotFound from '../NotFound/NotFound';
 import Register from '../Register/Register';
@@ -32,18 +32,14 @@ function App() {
 
   const navigate = useNavigate();
 
-  function handleMenuOpen() {
-    setMenuOpen(!isMenuOpen);
-  }
-
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       auth
         .checkToken(jwt)
         .then((res) => {
+          setLoggedIn(true);
           if (res) {
-            setLoggedIn(true);
             setCurrentUser({ name: res.name, email: res.email, id: res._id })
           }
         })
@@ -53,6 +49,25 @@ function App() {
         });
     }
   }, []);
+
+  function setDataInfo() {
+    const jwt = localStorage.getItem('jwt');
+    auth
+      .checkToken(jwt)
+      .then((res) => {
+        console.log(res);
+        setCurrentUser({ name: res.name, email: res.email, id: res._id })
+      })
+      .catch((err) => {
+        setTooltipText(`Ошибка загрузки данных: ${err}`);
+        setIsSuccessful(false);
+        setIsInfoTooltipOpen(true);
+      });
+  }
+
+  function handleMenuOpen() {
+    setMenuOpen(!isMenuOpen);
+  }
 
   useEffect(() => {
     if (loggedIn) {
@@ -148,6 +163,7 @@ function App() {
           localStorage.setItem('jwt', res.token);
           setLoggedIn(true);
           setDataInfo();
+          navigate('/movies');
         }
       })
       .catch((err) => {
@@ -156,24 +172,8 @@ function App() {
         setIsInfoTooltipOpen(true);
       })
       .finally(() => {
-        navigate('/movies');
         setShowPreloader(false);
       })
-  }
-
-  function setDataInfo() {
-    const jwt = localStorage.getItem('jwt');
-    auth
-      .checkToken(jwt)
-      .then((res) => {
-        console.log(res);
-        setCurrentUser({ name: res.name, email: res.email, id: res._id })
-      })
-      .catch((err) => {
-        setTooltipText(`Ошибка загрузки данных: ${err}`);
-        setIsSuccessful(false);
-        setIsInfoTooltipOpen(true);
-      });
   }
 
   function onRegister(name, email, password) {
@@ -213,7 +213,7 @@ function App() {
 
   function onSignOut() {
     setLoggedIn(false);
-    navigate('/signin');
+    navigate('/');
     localStorage.removeItem('jwt');
     localStorage.removeItem('savedFilteredMovies');
     localStorage.removeItem('savedInputSearch');
@@ -241,77 +241,79 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <Routes>
-          <>
-            <Route path="/"
-              element={
-                <Main
-                  loggedIn={loggedIn}
-                  isMenuOpen={isMenuOpen}
-                  onClicOpen={handleMenuOpen}
-                  onClickCloseMenu={handleMenuOpen}
-                />
-              } />
-            <Route path="/signup"
-              element={!loggedIn
-                ? <Register
-                  onRegister={onRegister}
-                  showPreloader={showPreloader} />
-                : <Navigate to="/movies"
-                />
-              } />
-            <Route path="/signin"
-              element={!loggedIn
-                ? <Login onLogin={onLogin}
-                  showPreloader={showPreloader} />
-                : <Navigate to="/movies"
-                />
-              } />
-            <Route path="/profile"
-              element={
-                <ProtectedRoute
-                  component={Profile}
-                  loggedIn={loggedIn}
-                  isMenuOpen={isMenuOpen}
-                  onClicOpen={handleMenuOpen}
-                  onUpdateProfile={handleUpdateProfile}
-                  onClick={onSignOut}
-                  onClickCloseMenu={handleMenuOpen}
-                />
-              } />
-            <Route path="/movies"
-              element={
-                <ProtectedRoute
-                  component={Movies}
-                  loggedIn={loggedIn}
-                  savedMovies={savedMovies}
-                  onMovieSave={onMovieSave}
-                  isMenuOpen={isMenuOpen}
-                  onClicOpen={handleMenuOpen}
-                  onClicPopupOpen={handleOpenTrailerClick}
-                  onClickCloseMenu={handleMenuOpen}
-                />
-              } />
-            <Route path="/saved-movies"
-              element={
-                <ProtectedRoute
-                  component={SavedMovies}
-                  loggedIn={loggedIn}
-                  movies={savedMovies}
-                  isMenuOpen={isMenuOpen}
-                  onClicOpen={handleMenuOpen}
-                  showPreloader={showPreloader}
-                  getMovies={getSavedMovies}
-                  isSearchError={isSearchError}
-                  onMovieDel={onMovieDel}
-                  onClicPopupOpen={handleOpenTrailerClick}
-                  onClickCloseMenu={handleMenuOpen}
-                />
-              } />
-            <Route path="*"
-              element={
-                <NotFound />
-              } />
-          </>
+
+          <Route path="/profile"
+            element={
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                component={Profile}
+                isMenuOpen={isMenuOpen}
+                onClicOpen={handleMenuOpen}
+                onUpdateProfile={handleUpdateProfile}
+                onClick={onSignOut}
+                onClickCloseMenu={handleMenuOpen}
+              />
+            } />
+
+          <Route path="/movies"
+            element={
+              <ProtectedRoute
+                component={Movies}
+                loggedIn={loggedIn}
+                savedMovies={savedMovies}
+                onMovieSave={onMovieSave}
+                isMenuOpen={isMenuOpen}
+                onClicOpen={handleMenuOpen}
+                onClicPopupOpen={handleOpenTrailerClick}
+                onClickCloseMenu={handleMenuOpen}
+              />
+            } />
+
+          <Route path="/saved-movies"
+            element={
+              <ProtectedRoute
+                component={SavedMovies}
+                loggedIn={loggedIn}
+                movies={savedMovies}
+                isMenuOpen={isMenuOpen}
+                onClicOpen={handleMenuOpen}
+                showPreloader={showPreloader}
+                getMovies={getSavedMovies}
+                isSearchError={isSearchError}
+                onMovieDel={onMovieDel}
+                onClicPopupOpen={handleOpenTrailerClick}
+                onClickCloseMenu={handleMenuOpen}
+              />
+            } />
+
+          <Route path="/signup"
+            element={!loggedIn
+              ? <Register
+                onRegister={onRegister}
+                showPreloader={showPreloader} />
+              : <Navigate to="/movies"
+              />
+            } />
+          <Route path="/signin"
+            element={!loggedIn
+              ? <Login onLogin={onLogin}
+                showPreloader={showPreloader} />
+              : <Navigate to="/movies"
+              />
+            } />
+          <Route path="/"
+            element={
+              <Main
+                loggedIn={loggedIn}
+                isMenuOpen={isMenuOpen}
+                onClicOpen={handleMenuOpen}
+                onClickCloseMenu={handleMenuOpen}
+              />
+            } />
+          <Route path="*"
+            element={
+              <NotFound />
+            } />
         </Routes>
         <InfoTooltip
           name='info-tooltip'
