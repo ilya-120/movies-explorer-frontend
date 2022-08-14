@@ -48,6 +48,11 @@
   margin-top: 0;
 }
 
+.input:focus {
+  cursor: 'auto';
+  background-color: #424242;
+}
+
 .input::content {
   margin-top: 0;
 }
@@ -74,6 +79,10 @@
   font-size: 13px;
   line-height: 1.23;
   color: #EE3465;
+}
+
+.login__button_profile_disabled {
+  color: #424242;
 }
 
 .login__button_profile_disabled:hover {

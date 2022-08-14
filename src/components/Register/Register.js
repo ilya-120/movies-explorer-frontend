@@ -43,7 +43,7 @@ function Register({ onRegister, showPreloader }) {
           onChange={handleChange}
           value={enteredValues.name || ''}
         />
-        <span id="name-error" className="login__error">{!isFormValid && errors.name ? 'поле Имя от 2 до 30 символов, содержит только латиницу, кириллицу, пробел или дефис.' : ''}</span>
+        <span id="name-error" className="login__error">{!isFormValid && errors.name ? 'Поле Имя от 2 до 30 символов, содержит только латиницу, кириллицу, пробел или дефис.' : ''}</span>
         <label className="login__label">E-mail</label>
         <input
           className="login__input login__input_blue"
@@ -53,7 +53,7 @@ function Register({ onRegister, showPreloader }) {
           id="email"
           placeholder=""
           required
-          minLength="2"
+          minLength="4"
           maxLength="50"
           onChange={handleChange}
           value={enteredValues.email || ''}
@@ -68,12 +68,11 @@ function Register({ onRegister, showPreloader }) {
           id="password"
           placeholder=""
           required
-          minLength="6"
-          maxLength="200"
+          pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*"
           onChange={handleChange}
           value={enteredValues.password || ''}
         />
-        <span id="password-error" className="login__error">{errors.password}</span>
+        <span id="password-error" className="login__error">{!isFormValid && errors.password ? 'Поле пароля: Минимум 8 символов, одна цифра, одна буква в верхнем регистре и одна в нижнем.' : ''}</span>
         <button
           type="submit"
           disabled={!isFormValid}
