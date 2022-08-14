@@ -100,8 +100,11 @@
 
 @media screen and (max-width: 768px) {
   .navigation__button_action_close {
-    width: 16px;
-    height: 16px;
+    position: fixed;
+    top: 28px;
+    right: 28px;
+    width: 18px;
+    height: 18px;
     background-image: url(../../images/Close-Icon.svg);
     background-color: #202020;
     background-repeat: no-repeat;
@@ -154,6 +157,10 @@
   margin-bottom: 22px;
 }
 
+.header__link_burger-menu_activ:first-of-type {
+  margin-top: 153px;
+}
+
 .header__link_burger-menu {
   min-height: 28px;
   font-weight: 500;
@@ -175,6 +182,14 @@
   .navigation__menu-button-null {
     width: 40px;
     height: 43px;
+  }
+
+  .navigation__button_action_close {
+    position: fixed;
+    top: 30px;
+    right: 21px;
+    width: 16px;
+    height: 16px;
   }
 
   .navigation__button_action_open {
@@ -199,6 +214,11 @@
     height: 26px;
     margin-left: 14px;
 
+  }
+
+  .header__link_nologgedIn {
+    font-size: 10px;
+    line-height: 1.6;
   }
 
   .header__button-text {

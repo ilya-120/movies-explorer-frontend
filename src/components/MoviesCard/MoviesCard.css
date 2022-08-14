@@ -85,7 +85,7 @@
   opacity: 0.8;
 }
 
-input:checked+.movies-card__favorite-btn {
+.movies-card__favorite-btn_is_saved {
   background-image: url("../../images/icon-favorit.svg");
   background-repeat: no-repeat;
   background-position: center;

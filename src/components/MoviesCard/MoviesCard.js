@@ -2,9 +2,22 @@ import React from 'react';
 import './MoviesCard.css'
 import { useLocation } from "react-router-dom";
 
-function MoviesCard({ movie }) {
+function MoviesCard({ movie, savedMovies, onMovieSave, onMovieDel, onClicPopupOpen }) {
   const duration = `${Math.trunc(movie.duration / 60)}ч ${movie.duration % 60}м`;
   const path = useLocation();
+  const isSaved = savedMovies?.some(i => i.movieId === movie.id)
+
+  function handleSaveClick() {
+    onMovieSave(movie);
+  }
+
+  function handleDelClick() {
+    onMovieDel(movie);
+  }
+
+  function handlePopupOpen() {
+    onClicPopupOpen(movie)
+  }
 
   return (
     <article className="movies-card">
@@ -21,8 +34,9 @@ function MoviesCard({ movie }) {
               type="checkbox"
               className="movies-card__favorite-btn-hide"
               id={movie.id}
+              onChange={handleSaveClick}
             />
-            <span className="movies-card__favorite-btn" />
+            <span className={`movies-card__favorite-btn ${isSaved && 'movies-card__favorite-btn_is_saved'}`}/>
           </label>)
         }
 
@@ -33,13 +47,17 @@ function MoviesCard({ movie }) {
               type="button"
               className="movies-card__del-btn"
               id={movie.id}
+              onClick={handleDelClick}
             />
           </div>)
         }
       </div>
       <img className="movies-card__image"
-        src={`https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`}
-        alt={movie.nameRU} />
+        src={path.pathname === '/movies' ?
+          `https://api.nomoreparties.co${movie.image.url}`
+          : movie.image}
+        alt={movie.nameRU}
+        onClick={handlePopupOpen} />
     </article>
   )
 }

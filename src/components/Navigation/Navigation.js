@@ -13,7 +13,7 @@ function Navigation({ loggedIn, isMenuOpen, onClicOpen }) {
       </ul>
       {!loggedIn ?
         (<>
-          <Link to="/signup" className='header__link'>Регистрация</Link>
+          <Link to="/signup" className='header__link header__link_nologgedIn'>Регистрация</Link>
           <Link to="/signin" className='header__button'>
             <p className='header__button-text'>Войти</p>
           </Link>

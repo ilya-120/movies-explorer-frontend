@@ -31,7 +31,7 @@
   line-height: 1.21;
 }
 
-.form {
+.login__form {
   width: 396px;
   min-height: 700px;
   margin: 0 auto;
@@ -74,10 +74,6 @@
   line-height: 1.23;
 }
 
-.login__input:last-of-type::placeholder {
-  color: #EE3465;
-}
-
 .login__input_blue {
   border-bottom: 1px solid #4285F4;
 }
@@ -89,10 +85,6 @@
   line-height: 1.2;
   min-height: 12px;
   color: #EE3465;
-  visibility: hidden;
-}
-
-.login__error_visible {
   visibility: visible;
 }
 
@@ -145,6 +137,11 @@
   opacity: 0.8;
 }
 
+.login__button_disabled:hover {
+  cursor: default;
+  opacity: 1;
+}
+
 @media screen and (max-width: 1023px) {
   .login {
     padding: 232px 0;
@@ -167,7 +164,7 @@
     text-align: center;
   }
 
-  .form {
+  .login__form {
     width: 260px;
   }
 
