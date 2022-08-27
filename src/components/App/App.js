@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Main from '../Main/Main';
 import NotFound from '../NotFound/NotFound';
 import Register from '../Register/Register';
@@ -14,6 +15,8 @@ import * as auth from '../../utils/MainApi';
 import InfoTooltip from '../../components/Popup/InfoTooltip';
 import { mainApi } from '../../utils/MainApi';
 import VideoPopup from '../Popup/VideoPopup';
+import Admin from '../Admin/Admin';
+import EditAvatarPopup from '../Popup/EditAvatarPopup';
 
 function App() {
 
@@ -23,12 +26,16 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isClose, setIsClose] = useState(false);
   const [movie, setMovie] = useState({});
+  const [users, setUsers] = useState({});
   const [showPreloader, setShowPreloader] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [isVideoPopupOpen, setIsVideoPopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isSearchError, setIsSearchError] = useState(false);
   const [tooltipText, setTooltipText] = useState('');
   const [savedMovies, setSavedMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, getFile] = useState({ status: false, name: "", path: "" });
 
   const navigate = useNavigate();
 
@@ -40,7 +47,7 @@ function App() {
         .then((res) => {
           setLoggedIn(true);
           if (res) {
-            setCurrentUser({ name: res.name, email: res.email, id: res._id })
+            setCurrentUser({ name: res.name, email: res.email, id: res._id, admin: res.admin, avatar: res.avatar });
           }
         })
         .catch((err) => {
@@ -50,13 +57,14 @@ function App() {
     }
   }, []);
 
+
   function setDataInfo() {
     const jwt = localStorage.getItem('jwt');
     auth
       .checkToken(jwt)
       .then((res) => {
         console.log(res);
-        setCurrentUser({ name: res.name, email: res.email, id: res._id })
+        setCurrentUser({ name: res.name, email: res.email, id: res._id, admin: res.admin, avatar: res.avatar })
       })
       .catch((err) => {
         setTooltipText(`Ошибка загрузки данных: ${err}`);
@@ -64,6 +72,21 @@ function App() {
         setIsInfoTooltipOpen(true);
       });
   }
+
+  function setDataUsers() {
+    const jwt = localStorage.getItem('jwt');
+    auth
+      .getUsers(jwt)
+      .then((res) => {
+        setUsers(res);
+      })
+      .catch((err) => {
+        setTooltipText(`Ошибка загрузки данных: ${err}`);
+        setIsSuccessful(false);
+        setIsInfoTooltipOpen(true);
+      });
+  }
+
 
   function handleMenuOpen() {
     setMenuOpen(!isMenuOpen);
@@ -78,6 +101,13 @@ function App() {
       }
     }
   }, [loggedIn])
+
+  useEffect(() => {
+    if (currentUser.admin === true) {
+      setDataUsers()
+    }
+    else return
+  }, [currentUser])
 
   function updateSavedMovies(savedMovies) {
     setSavedMovies(savedMovies);
@@ -154,6 +184,42 @@ function App() {
       })
   }
 
+  function onUserDel(user) {
+    const jwt = localStorage.getItem('jwt');
+    const id = user._id;
+    auth
+      .deleteUser(id, jwt)
+      .then(() => {
+        setTooltipText('Пользователь успешно удален.');
+        setIsSuccessful(true);
+        setIsInfoTooltipOpen(true);
+        setDataUsers();
+      })
+      .catch((err) => {
+        setTooltipText(`Ошибка удаления данных: ${err}`);
+        setIsSuccessful(false);
+        setIsInfoTooltipOpen(true);
+      })
+  }
+
+  function handleUpdateUserProfile(name, email, user) {
+    const jwt = localStorage.getItem('jwt');
+    const id = user._id;
+    auth
+      .setEditUserInfo(jwt, name, email, id)
+      .then(() => {
+        setTooltipText('Данные пользователя успешно изменены.');
+        setIsSuccessful(true);
+        setIsInfoTooltipOpen(true);
+        setDataUsers();
+      })
+      .catch((err) => {
+        setTooltipText(`Ошибка загрузки данных: ${err}`);
+        setIsSuccessful(false);
+        setIsInfoTooltipOpen(true);
+      })
+  }
+
   function onLogin(email, password) {
     setShowPreloader(true);
     auth
@@ -202,13 +268,47 @@ function App() {
     auth
       .setUserInfo(jwt, name, email)
       .then((res) => {
-        setCurrentUser({ name: res.name, email: res.email, id: res._id })
+        setCurrentUser({ name: res.name, email: res.email, id: res._id, admin: res.admin })
       })
       .catch((err) => {
         setTooltipText(`Ошибка загрузки данных: ${err}`);
         setIsSuccessful(false);
         setIsInfoTooltipOpen(true);
       })
+  }
+
+  function uploadFile(formData) {
+    const jwt = localStorage.getItem('jwt');
+    axios.post('https://api.ilya120.nomoreparties.sbs/users',
+      formData,
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwt}`,
+        }
+      }
+    ).then(res => {
+      console.log(res.data);
+      getFile({
+        status: res.data.status,
+        name: res.data.name,
+        path: 'https://api.ilya120.nomoreparties.sbs' + res.data.path
+      })
+      setIsEditAvatarPopupOpen(false);
+      setTooltipText('Аватар успешно изменен');
+      setIsSuccessful(true);
+      setIsInfoTooltipOpen(true);
+    }).catch(err => {
+      setIsEditAvatarPopupOpen(false);
+      setTooltipText(`Ошибка загрузки данных: ${err.response.data.message}`);
+      setIsSuccessful(false);
+      setIsInfoTooltipOpen(true);
+      setIsSearchError(true);
+    })
+      .finally(() =>
+        setDataInfo(),
+        setDataUsers());
   }
 
   function onSignOut() {
@@ -228,6 +328,7 @@ function App() {
   function closeAllPopups() {
     setIsInfoTooltipOpen(false);
     setIsVideoPopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
     setIsClose(false)
   }
 
@@ -235,6 +336,14 @@ function App() {
     setIsVideoPopupOpen(true)
     setIsClose(true)
     setMovie(movie);
+  }
+
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true)
+  }
+
+  function handleUpdateAvatar() {
+    setIsLoading(true);
   }
 
   return (
@@ -252,6 +361,7 @@ function App() {
                 onUpdateProfile={handleUpdateProfile}
                 onClick={onSignOut}
                 onClickCloseMenu={handleMenuOpen}
+                onEditAvatar={handleEditAvatarClick}
               />
             } />
 
@@ -283,6 +393,27 @@ function App() {
                 onMovieDel={onMovieDel}
                 onClicPopupOpen={handleOpenTrailerClick}
                 onClickCloseMenu={handleMenuOpen}
+              />
+            } />
+
+          <Route path="/admin"
+            element={currentUser.admin === true ?
+              <ProtectedRoute
+                component={Admin}
+                loggedIn={loggedIn}
+                isMenuOpen={isMenuOpen}
+                onClicOpen={handleMenuOpen}
+                showPreloader={showPreloader}
+                onClickCloseMenu={handleMenuOpen}
+                users={users}
+                onUserDel={onUserDel}
+                onUpdateUserProfile={handleUpdateUserProfile}
+                uploadFile={uploadFile}
+                setDataUsers={setDataUsers}
+                data={data}
+                getFile={getFile}
+              />
+              : <Navigate to="/"
               />
             } />
 
@@ -328,6 +459,13 @@ function App() {
           onClose={closeAllPopups}
           movie={movie}
           isClose={isClose}
+        />
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          uploadFile={uploadFile}
+          onUpdateAvatar={handleUpdateAvatar}
+          onLoading={isLoading}
+          onClose={closeAllPopups}
         />
       </div>
     </CurrentUserContext.Provider >

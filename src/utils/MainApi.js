@@ -44,6 +44,42 @@ export const checkToken = async token => {
   return checkResponse(res);
 };
 
+export const getUsers = async (token) => {
+  const res = await fetch(`${BASE_URL}/users`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${token}`
+    }
+  });
+  return checkResponse(res);
+};
+
+export const deleteUser = async (id, jwt) => {
+  const res = await fetch(`${BASE_URL}/users/me`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Authorization': `Bearer ${jwt}`,
+    },
+    body: JSON.stringify({ _id: id })
+  });
+  return checkResponse(res);
+};
+
+export const setEditUserInfo = async (jwt, name, email, id) => {
+  const res = await fetch(`${BASE_URL}/users`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${jwt}`,
+    },
+    body: JSON.stringify({ name: name, email: email, _id: id  })
+  });
+  return checkResponse(res);
+}
+
 export const setUserInfo = async (jwt, name, email) => {
   const res = await fetch(`${BASE_URL}/users/me`, {
     method: 'PATCH',
@@ -121,4 +157,4 @@ const mainApi = new MainApi({
   headers: headers,
 });
 
-export {mainApi};
+export { mainApi };

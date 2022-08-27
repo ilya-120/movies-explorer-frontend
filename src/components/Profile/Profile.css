@@ -90,6 +90,36 @@
   cursor: default;
 }
 
+.profile__avatar-button {
+  background-image: url("../../images/Vector.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+  width: 50px;
+  height: 50px;
+  border: none;
+  position: absolute;
+  opacity: 0;
+  border: 0;
+}
+
+.profile__avatar-button:hover {
+  opacity: 0.8;
+  background-color: rgba(0, 0, 0, 0.489);
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.profile-edit__avatar {
+  max-width: 410px;
+  min-height: 50px;
+  padding: 10px 32px;
+  display: flex;
+  justify-content: center;
+
+  position: relative;
+}
+
 @media screen and (max-width: 1023px) {
   .profile {
     min-height: 950px;
