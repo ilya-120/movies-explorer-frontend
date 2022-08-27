@@ -11,7 +11,8 @@ function Profile({ loggedIn,
   onClicOpen,
   onUpdateProfile,
   onClick,
-  onClickCloseMenu }) {
+  onClickCloseMenu,
+  onEditAvatar }) {
   const currentUser = useContext(CurrentUserContext);
   const { enteredValues, errors, isFormValid, handleChange } = UseForm();
   const isNotChange = Boolean(currentUser.email === enteredValues.email && currentUser.name === enteredValues.name);
@@ -29,6 +30,7 @@ function Profile({ loggedIn,
     }
     onUpdateProfile(enteredValues.name, enteredValues.email);
   }
+
   return (
     <>
       <div className={`${isMenuOpen && 'background-overlay_activ'}`}
@@ -44,6 +46,12 @@ function Profile({ loggedIn,
           noValidate
         >
           <h2 className="profile__title">Привет, {currentUser.name}!</h2>
+          <div className="elements__user-avatar">
+            <img className="elements__user-avatar_img" crossOrigin="true" src={currentUser.avatar} alt="аватар пользователя"></img>
+            <button className="profile__avatar-button"
+              onClick={onEditAvatar}>
+            </button>
+          </div>
           <div className="profile__input-container">
             <label className="profile__label">Имя</label>
             <input

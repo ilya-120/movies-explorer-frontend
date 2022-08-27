@@ -6,6 +6,7 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
+import Slaider from '../Slider/Slaider';
 
 function Main({ loggedIn,
   isMenuOpen,
@@ -25,6 +26,7 @@ function Main({ loggedIn,
       <Techs />
       <AboutMe />
       <Portfolio />
+      <Slaider />
       <Footer />
     </main>
   )
