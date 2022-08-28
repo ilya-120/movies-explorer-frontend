@@ -99,18 +99,7 @@
 
 @media screen and (max-width: 767px) {
   .slider {
-    width: calc(100vw - 28px);
-  }
-
-  .slick-next {
-    position: relative;
-    margin: auto 50px;
-  }
-
-  .slick-prev {
-    position: relative;
-    margin: auto 50px;
-    z-index: 10;
+    width: calc(100vw - 58px);
   }
 
   .slider__background-text {
@@ -125,7 +114,7 @@
     justify-content: center;
     margin: auto;
     width: 40%;
-    height: 30%;
+    height: 40%;
   }
 
   .slider__subtitle {
@@ -138,13 +127,14 @@
   .slider__link {
     font-weight: 400;
     font-size: 12px;
-    line-height: 1.45;
+    line-height: 1.7;
   }
 
   .slider__button {
     margin: auto;
     min-height: 20px;
     max-width: 100px;
+
   }
 }
 
@@ -156,6 +146,7 @@
   }
 
   .slider__link {
-    font-size: 11px;
+    font-size: 12px;
+ align-items: baseline;
   }
 }

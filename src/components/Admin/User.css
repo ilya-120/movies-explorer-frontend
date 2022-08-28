@@ -23,21 +23,20 @@
 
 .user__btn-container {
   position: relative;
-  display: inline-block;
   width: 30px;
   height: 30px;
   align-self: center;
+  justify-content: center;
 }
 
 .user__del-btn {
-  background-color: #313131;
   position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 100%;
+  border-radius: 50%;
   border: none;
   background-image: url("../../images/del_btn.svg");
   background-repeat: no-repeat;
@@ -53,7 +52,6 @@
 }
 
 .profile__edit-button {
-  background-color: #313131;
   box-sizing: border-box;
   position: absolute;
   cursor: pointer;
@@ -61,7 +59,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 100%;
+  border-radius: 50%;
   border: none;
   background-image: url("../../images/Vector.svg");
   background-repeat: no-repeat;
@@ -233,7 +231,7 @@
 
 @media screen and (max-width: 767px) {
   .elements__users {
-    grid-template-columns: 50px 1fr 30px 30px;
+    grid-template-columns: 50px 1fr 50px 50px;
     margin: 0 14px;
   }
 
@@ -250,8 +248,9 @@
   }
 
   .user__btn-container {
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 35px;
+    margin: auto;
   }
 
   .profile-operations__button {
