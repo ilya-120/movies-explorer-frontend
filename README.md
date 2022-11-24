@@ -2,15 +2,15 @@
 
 * [бэкенд](https://github.com/ilya-120/movies-explorer-api) часть приложения
 
-* приложение включает функциональные возможности такие как: 
+* приложение включает функциональные возможности такие как:
 * авторизация и регистрация пользователей,
 * поиск фильмов на стороннем [api](https://api.nomoreparties.co/beatfilm-movies)
 * операции с карточками найденных фильмов - добавление в избранное и удаление из избранного, поиск по избранному,
 * редактирование профиля пользователя.
 
 
-# [Деплой проекта](https://ilya120.nomoreparties.sbs) 
+# [Деплой проекта](https://promo.nexus.moscow)
 
-* https://ilya120.nomoreparties.sbs
+* https://promo.nexus.moscow
 
 * [Макет](https://www.figma.com/file/fM4N9nojHjOqd4Gt4cVJWe/Diploma-(Copy)?node-id=932%3A3228)
