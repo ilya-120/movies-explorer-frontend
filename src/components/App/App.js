@@ -279,7 +279,7 @@ function App() {
 
   function uploadFile(formData) {
     const jwt = localStorage.getItem('jwt');
-    axios.post('https://api.ilya120.nomoreparties.sbs/users',
+    axios.post('https://api.promo.nexus.moscow/users',
       formData,
       {
         headers: {
@@ -293,7 +293,7 @@ function App() {
       getFile({
         status: res.data.status,
         name: res.data.name,
-        path: 'https://api.ilya120.nomoreparties.sbs' + res.data.path
+        path: 'https://api.promo.nexus.moscow' + res.data.path
       })
       setIsEditAvatarPopupOpen(false);
       setTooltipText('Аватар успешно изменен');
@@ -307,8 +307,7 @@ function App() {
       setIsSearchError(true);
     })
       .finally(() =>
-        setDataInfo(),
-        setDataUsers());
+        setDataInfo());
   }
 
   function onSignOut() {
@@ -413,7 +412,7 @@ function App() {
                 data={data}
                 getFile={getFile}
               />
-              : <Navigate to="/"
+              : <Navigate to="/profile"
               />
             } />
 
@@ -466,6 +465,7 @@ function App() {
           onUpdateAvatar={handleUpdateAvatar}
           onLoading={isLoading}
           onClose={closeAllPopups}
+          setDataUsers={setDataUsers}
         />
       </div>
     </CurrentUserContext.Provider >

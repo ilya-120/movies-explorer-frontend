@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import './FileUpload.css'
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 
-function FileUpload({ user, uploadFile }) {
-
+function FileUpload({ user, uploadFile, setDataUsers }) {
+  const currentUser = useContext(CurrentUserContext);
   const [file, setFile] = useState('');
   const el = useRef();
   const userId = user._id;
@@ -14,9 +15,10 @@ function FileUpload({ user, uploadFile }) {
 
   const handleChange = (e) => {
     const file = e.target.files[0];
-    console.log(file);
-    console.log(user._id);
     setFile(file);
+    if (currentUser.admin) {
+      setDataUsers()
+    }
   }
 
   function handleEditClick() {
